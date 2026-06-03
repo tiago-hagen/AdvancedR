@@ -1,0 +1,22 @@
+"0","install.packages(""janitor"")
+"
+"2","WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+https://cran.rstudio.com/bin/windows/Rtools/
+"
+"2","tentando a URL 'https://cran.rstudio.com/bin/windows/contrib/4.6/snakecase_0.11.1.zip'
+"
+"2","tentando a URL 'https://cran.rstudio.com/bin/windows/contrib/4.6/janitor_2.2.1.zip'
+"
+"1","package ‘snakecase’ successfully unpacked and MD5 sums checked
+"
+"1","package ‘janitor’ successfully unpacked and MD5 sums checked
+"
+"1","
+"
+"1",""
+"1","Os pacotes binários baixados estão em
+	C:\Users\tiago\AppData\Local\Temp\RtmpILqI0E\downloaded_packages"
+"1",""
+"1","
+"

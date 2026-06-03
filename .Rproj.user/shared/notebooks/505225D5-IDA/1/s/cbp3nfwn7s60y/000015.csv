@@ -1,0 +1,8 @@
+"0","ggplot(dataset1, aes(x = on_an_average_how_many_hours_a_day_do_you_spend_on_these_sites, "
+"0","               fill = do_you_consider_yourself_addicted_to_social_media)) +"
+"0","  geom_bar(position = ""dodge"") +"
+"0","  theme_minimal() +"
+"0","  labs(title = ""Relationship: Social Media Usage vs. Self-Reported Addiction"","
+"0","       x = ""Average Daily Hours Spent on Social Media"","
+"0","       y = ""Number of Respondents"","
+"0","       fill = ""Considered Addicted?"")"
