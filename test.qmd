@@ -1,6 +1,6 @@
 ---
 title: "Group Project Advanced Statistical Programming using R"
-author: "Tiago HAGEN, Marco, Nizami AZIZOV and Louisa DJEBROUN"
+author: "Tiago HAGEN, Marco ANTON, Nizami AZIZOV and Louisa DJEBROUN"
 date: today
 format:
   html:
