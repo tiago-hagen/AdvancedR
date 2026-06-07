@@ -13,6 +13,9 @@ format:
 execute:
   warning: false
   message: false
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup}
@@ -81,7 +84,8 @@ df <- df |>
 
 ## Source and licence
 
-The dataset is titled "Social Media Impact on Daily Lives" and can be downloaded
+The dataset is titled "Social Media Impact on Daily Lives" and can be
+downloaded
 [here](https://data.mendeley.com/datasets/9s2nmbxkrs/2/files/6647758b-2eca-4158-a49e-a82611be62f0).
 It was collected via a structured online survey on January 2025.
 
@@ -93,7 +97,7 @@ The dataset contains `r nrow(df)` rows and `r ncol(df_raw)` columns.
 Each row represents one survey respondent. The key variables are:
 
 | Variable | Rename | Type | Description |
-|---|---|---|---|
+|------------------|------------------|------------------|------------------|
 | `Enter your age (Ex: 20)` | age | numeric | Respondent's age in years |
 | `What is your gender` | gender | categorical | Male / Female |
 | `What is your profession?` | profession | categorical | Student / Employee |
@@ -103,52 +107,60 @@ Each row represents one survey respondent. The key variables are:
 | `When you use social media did you forget about time?` | forget_time | categorical | Whether the user forgets time while on social media |
 | `Do you consider yourself addicted to social media?` | addicted | categorical | Self-reported addiction: Yes / No / Not sure |
 
-
 ## Research questions
 
 ### Descriptive
-**Do younger people spend more time on social media?**  
-We aim to describe the distribution of daily social media usage across age groups and report whether a negative or positive association exists between age and screen time in this sample.
+
+**Do younger people spend more time on social media?**\
+We aim to describe the distribution of daily social media usage across
+age groups and report whether a negative or positive association exists
+between age and screen time in this sample.
 
 ### Explanatory
-**Would people with higher screen time consider themselves addicted?**  
-We will examine people who spend more hours on social media are more likely to report feeling addicted.
 
-
-### Explanatory
-**Do people with higher social media screen time spend less time with their family?**  
-We will examine whether daily social media usage and daily family time are negatively correlated, controlling informally for profession.
+**Would people with higher screen time consider themselves addicted?**\
+We will examine people who spend more hours on social media are more
+likely to report feeling addicted.
 
 ### Explanatory
-**Are women more influenced by social media advertising than men?**  
-We will compare the distribution of the `ad_influence` variable across genders and assess whether the difference is substantively meaningful.
+
+**Do people with higher social media screen time spend less time with
+their family?**\
+We will examine whether daily social media usage and daily family time
+are negatively correlated, controlling informally for profession.
+
+### Explanatory
+
+**Are women more influenced by social media advertising than men?**\
+We will compare the distribution of the `ad_influence` variable across
+genders and assess whether the difference is substantively meaningful.
 
 ### Predictive
-**Can we predict that someone considers themselves addicted to social media?**  
-Using logistic regression, we will model the binary outcome `addicted` as a function of age, gender, social media hours, and perceived benefits.
 
-(Other idea: predict screen time using a regression model based on age, profession, gender?)
+**Can we predict that someone considers themselves addicted to social
+media?**\
+Using logistic regression, we will model the binary outcome `addicted`
+as a function of age, gender, social media hours, and perceived
+benefits.
+
+(Other idea: predict screen time using a regression model based on age,
+profession, gender?)
 
 ## Context and target audience
 
-This analysis explores how social media usage relates to:
-- Addiction perception
-- Family/social life balance
-- Demographic differences (age, gender)
-- Consumer behavior (advertising influence)
+This analysis explores how social media usage relates to: - Addiction
+perception - Family/social life balance - Demographic differences (age,
+gender) - Consumer behavior (advertising influence)
 
-Target audience: Product managers, Social Media managers, policy makers (political and social)
-Interactive Dashboard would be suitable for this audience.
-
-
+Target audience: Product managers, Social Media managers, policy makers
+(political and social) Interactive Dashboard would be suitable for this
+audience.
 
 # Initial data analysis
-
 
 ```{r glimpse}
 glimpse(df)
 ```
-
 
 ```{r summary-stats}
 df |>
@@ -169,6 +181,7 @@ bind_rows(
   drop_na(Value) |>
   kable()
 ```
+
 ```{r}
 df_raw |>
   summarise(across(everything(), ~ sum(is.na(.)))) |>
@@ -180,9 +193,11 @@ df_raw |>
   filter(`What is your profession?` == "male")
 ```
 
-
-**Missing values:** The `name` column has 1 missing entry, and 1 row had `profession = "male"` (a clear data-entry error, recoded to `NA`). All other key variables are complete (0 missing values). Hour variables are encoded as
-intervals (e.g. `"3-4"` hours) rather than continuous values, which limits precision.
+**Missing values:** The `name` column has 1 missing entry, and 1 row had
+`profession = "male"` (a clear data-entry error, recoded to `NA`). All
+other key variables are complete (0 missing values). Hour variables are
+encoded as intervals (e.g. `"3-4"` hours) rather than continuous values,
+which limits precision.
 
 ## Distribution plot
 
@@ -312,51 +327,117 @@ library(patchwork)
 (p4 + p1) / (p2 + p3) / p5
 ```
 
+## Data quality
 
-## Data quality 
-
-- Intervals, not continuous values: all time variables (`social_hours`, `family_hours`, `prof_hours`) are in the form of strings (for example, `“3-4”`).
-- 78% of respondents are students, which limits generalisability to employed populations.
+- Intervals, not continuous values: all time variables (`social_hours`,
+  `family_hours`, `prof_hours`) are in the form of strings (for example,
+  `“3-4”`).
+- 78% of respondents are students, which limits generalisability to
+  employed populations.
 - One row has `profession = "male"` recoded to `NA`.
-- The response options are Yes / No / Not sure. The "Not sure" group (`n = 125`, 24%) is substantial and will be excluded from binary logistic regression, reducing the effective sample.
-
-
+- The response options are Yes / No / Not sure. The "Not sure" group
+  (`n = 125`, 24%) is substantial and will be excluded from binary
+  logistic regression, reducing the effective sample.
 
 # Analysis plan
 
 ## First research question
 
-**Variables:** `age` and `social_hours`  
-**Approach:**   
-**Cleaning needed:** convert `social_hours` to numeric midpoints.  
-**Risks:** age range is 13–50 but highly concentrated at 22–27 
+*Do younger people spend more time on social media?* Variables: `age`
+and `social_hours`
+
+Approach: examine whether younger users spend more time on social media.
+We will use Exploratory Data Analysis (EDA). Since our variables are
+largely categorical or ordinal, we will focus on frequency distribution
+analysis and cross-tabulation. These methods are appropriate because
+they allow for the identification of patterns and trends in user
+behavior without requiring complex predictive modeling, which may be
+over-fitted given the sample size of 522.\
+
+Cleaning needed: convert `social_hours` to numeric, we will map the
+string-based time intervals (e.g., "1-2", "6+") to numeric mid-points
+(e.g., 1.5, 6.5) to enable basic arithmetic operations.
+
+Risks: age range is 13–50 but highly concentrated at 22–27.
 
 ## Second research question
 
-**Variables:** `social_hours_n`, `benefits` and `addicted`   
-**Approach:** 
-**Cleaning needed:** parse `benefits` into a count variable 
-**Risks:** 
+*Would people with higher screen time consider themselves addicted?*
+
+Variables: `social_hours_n`, `benefits` and `addicted`
+
+Approach: assess whether higher screen time is associated with feeling
+addicted. Explore whether greater perceived benefits are linked to
+higher addiction perception. We will use Pearson or Spearman correlation
+(depending on normality).
+
+Cleaning needed: parse `benefits` into a count variable. We will
+normalize the categorical responses to ensure consistent formatting for
+grouping and aggregation. Separating the used platforms and benefits in
+individual columns in order for the analysis.
+
+Risks: self-reported bias (screen time and addiction are subjective).
+The source data was collected via a Google Form without strict
+validation, leading to potential input errors. 
 
 ## Third research question
 
-**Variables:** `social_hours_n`, `family_hours_n` and `profession`
-**Approach:** scatter plot 
-**Risks:** 
+*Do people with higher social media screen time spend less time with
+their family?*
+
+Variables: `social_hours_n`, `family_hours_n` and `profession`
+
+Approach: scatter plot. Determine whether increased screen time is
+associated with reduced family interaction. We will use Pearson or
+Spearman correlation (depending on normality).
+
+Risks: self-reported bias (screen time and addiction are subjective).\
+Confounding variables: work/study requirements may affect screen time.\
+Measurement inconsistency: different interpretations of "family time" or
+"screen time". 
 
 ## Fourth research question
 
-**Variables:** `ad_influence` and `gender`.  
-**Approach:**   
-**Risks:** 
+*Are women more influenced by social media advertising than men?*
+
+Variables: `ad_influence` and `gender`.
+
+Approach: compare advertising responsiveness across genders. Compare the
+distribution of the `ad_influence` variable across genders and assess
+whether the difference is substantively meaningful. We will use
+frequency distribution analysis and cross-tabulation.
+
+Risks: self-reported bias.
 
 ## Fifth research question
 
-**Variables:** outcome: `addicted_bin` (1 = Yes, 0 = No, "Not sure" excluded) and predictors: `age`, `gender`, `social_hours_n`, `forget_time`
-**Approach:** logistic regression
-**Cleaning needed:** encode `forget_time` (Yes / Sometimes / No) and exclude "Not sure" `addiction` rows.  
-**Risks:** 
+*Can we predict that someone considers themselves addicted to social
+media?*
 
+Variables: outcome: `addicted_bin` (1 = Yes, 0 = No, "Not sure"
+excluded) and predictors: `age`, `gender`, `social_hours_n`,
+`forget_time`
+
+Approach: logistic regression. Using logistic regression (if addiction
+is binary) with predictors: screen time, age, gender, perceived
+benefits, family time.
+
+Cleaning needed: encode `forget_time` (Yes / Sometimes / No) and exclude
+"Not sure" `addiction` rows. We will explicitly filter out or categorize
+invalid entries in the What is your profession? column (e.g., the entry
+"male") to maintain analytical integrity. We will normalize the
+categorical responses to ensure consistent formatting for grouping and
+aggregation.
+
+Risks: self-reported bias (screen time and addiction are subjective).\
+Confounding variables: since this is observational data, other variables
+(e.g., age, academic workload, employment pressure) may influence the
+results, making it difficult to establish direct causality between
+social media usage and perceived addiction. The dataset is heavily
+skewed toward students (\~78%). This limits the generalizability of
+findings to other professional groups. The source data was collected via
+a Google Form without strict validation, leading to potential input
+errors.
 
 # Workflow organisation ?????
 
@@ -366,17 +447,14 @@ We will follow the tidyverse style ..?????
 
 ## Packages
 
-Core packages:
-- `tidyverse`
-- `scales` 
-- `patchwork` 
-- `knitr` / `kableExtra` 
-- `broom` 
-- `pROC` 
+Core packages: - `tidyverse` - `scales` - `patchwork` - `knitr` /
+`kableExtra` - `broom` - `pROC`
 
-We will use **`renv`** to lock package versions, ensuring the project renders identically across machines. The `renv.lock` file will be committed to the repo, large cache folders will be excluded via `.gitignore`.
+We will use **`renv`** to lock package versions, ensuring the project
+renders identically across machines. The `renv.lock` file will be
+committed to the repo, large cache folders will be excluded via
+`.gitignore`.
 
 ## Git workflow
 
 Each team member works on ...????
-
