@@ -23,6 +23,8 @@ editor:
 library(tidyverse)
 library(scales)
 library(knitr)
+library(patchwork)
+
 ```
 
 ```{r load-data}
@@ -30,7 +32,7 @@ library(knitr)
 df_raw <- read_csv("Social_Media_Impact_on_Daily_Lives.csv")
 
 # Rename columns to short
-df <- df_raw |>
+df <- df_raw %>% 
   rename(
     idx             = `...1`,
     name            = `Enter your name`,
@@ -48,7 +50,7 @@ df <- df_raw |>
     ad_influence    = `Does social media advertising influence the purchase of your product?`,
     forget_time     = `When you use social media did you forget about time?`,
     addicted        = `Do you consider yourself addicted to social media?`
-  ) |>
+  ) %>% 
   # Fix the one row where profession = "male" 
   mutate(profession = if_else(profession == "male", NA_character_, profession))
 
@@ -68,7 +70,7 @@ hour_midpoint <- function(x) {
   )
 }
 
-df <- df |>
+df <- df %>% 
   mutate(
     social_hours_n = hour_midpoint(social_hours),
     family_hours_n = hour_midpoint(family_hours),
@@ -89,7 +91,7 @@ downloaded
 [here](https://data.mendeley.com/datasets/9s2nmbxkrs/2/files/6647758b-2eca-4158-a49e-a82611be62f0).
 It was collected via a structured online survey on January 2025.
 
-Licence ?????
+Licence: CC BY 4.0
 
 ## What is in it
 
@@ -124,37 +126,34 @@ likely to report feeling addicted.
 
 ### Explanatory
 
-**Do people with higher social media screen time spend less time with
-their family?**\
+**Do people with higher social media screen time spend less time with their family?**\
 We will examine whether daily social media usage and daily family time
 are negatively correlated, controlling informally for profession.
 
 ### Explanatory
 
-**Are women more influenced by social media advertising than men?**\
+**Does the perceived influence of social media advertising on purchasing decisions differ between men and women?**\
 We will compare the distribution of the `ad_influence` variable across
 genders and assess whether the difference is substantively meaningful.
 
 ### Predictive
 
-**Can we predict that someone considers themselves addicted to social
-media?**\
+**Can we predict that someone considers themselves addicted to social media?**\
 Using logistic regression, we will model the binary outcome `addicted`
 as a function of age, gender, social media hours, and perceived
 benefits.
 
-(Other idea: predict screen time using a regression model based on age,
-profession, gender?)
 
 ## Context and target audience
 
-This analysis explores how social media usage relates to: - Addiction
-perception - Family/social life balance - Demographic differences (age,
-gender) - Consumer behavior (advertising influence)
+This analysis explores how social media usage relates to: 
+- Addiction perception 
+- Family/social life balance 
+- Demographic differences (age, gender) 
+- Consumer behavior (advertising influence)
 
-Target audience: Product managers, Social Media managers, policy makers
-(political and social) Interactive Dashboard would be suitable for this
-audience.
+Target audience: Product managers, Social Media managers, policy makers (political and social) \
+Interactive Dashboard would be suitable for this audience.
 
 # Initial data analysis
 
@@ -163,8 +162,8 @@ glimpse(df)
 ```
 
 ```{r summary-stats}
-df |>
-  select(age, social_hours_n, family_hours_n) |>
+df %>% 
+  select(age, social_hours_n, family_hours_n) %>% 
   summary()
 ```
 
@@ -173,23 +172,23 @@ df |>
 #| tbl-cap: "Response counts for key categorical variables"
 
 bind_rows(
-  df |> count(Variable = "Gender",       Value = gender)      |> rename(Count = n),
-  df |> count(Variable = "Profession",   Value = profession)  |> rename(Count = n),
-  df |> count(Variable = "Addicted",     Value = addicted)    |> rename(Count = n),
-  df |> count(Variable = "Forget time",  Value = forget_time) |> rename(Count = n)
-) |>
-  drop_na(Value) |>
+  df %>%  count(Variable = "Gender",       Value = gender)      %>%  rename(Count = n),
+  df %>%   count(Variable = "Profession",   Value = profession)  %>%  rename(Count = n),
+  df %>%  count(Variable = "Addicted",     Value = addicted)    %>%  rename(Count = n),
+  df %>%  count(Variable = "Forget time",  Value = forget_time) %>%  rename(Count = n)
+) %>% 
+  drop_na(Value) %>% 
   kable()
 ```
 
 ```{r}
-df_raw |>
-  summarise(across(everything(), ~ sum(is.na(.)))) |>
-  pivot_longer(everything(), names_to = "Variable", values_to = "Missing") |>
+df_raw %>% 
+  summarise(across(everything(), ~ sum(is.na(.)))) %>% 
+  pivot_longer(everything(), names_to = "Variable", values_to = "Missing") %>% 
   filter(Missing > 0)
 
 
-df_raw |>
+df_raw %>% 
   filter(`What is your profession?` == "male")
 ```
 
@@ -207,14 +206,14 @@ which limits precision.
 #| fig-width: 10
 #| fig-height: 4
 
-p1 <- df |>
-  filter(!is.na(addicted)) |>
+p1 <- df %>% 
+  filter(!is.na(addicted)) %>% 
   mutate(
     social_hours = factor(social_hours, levels = c("1-2","3-4","4-5","5-6","6+"))
-  ) |>
-  count(social_hours, addicted) |>
-  group_by(social_hours) |>
-  mutate(pct = n / sum(n)) |>
+  ) %>% 
+  count(social_hours, addicted) %>% 
+  group_by(social_hours) %>% 
+  mutate(pct = n / sum(n)) %>% 
   ggplot(aes(x = social_hours, y = pct, fill = addicted)) +
   geom_col(position = "fill") +
   scale_y_continuous(labels = percent_format()) +
@@ -227,13 +226,12 @@ p1 <- df |>
   ) +
   theme_minimal()
 
-p2 <- df |>
+p2 <- df %>% 
   ggplot(aes(x = age)) +
   geom_histogram(binwidth = 2, fill = "#4C9BE8", colour = "white") +
   labs(title = "Age Distribution of Respondents", x = "Age (years)", y = "Count") +
   theme_minimal()
 
-library(patchwork)
 p2 + p1
 ```
 
@@ -253,12 +251,12 @@ p1 <- ggplot(df, aes(
     fill = "Considered Addicted?"
   )
 
-p2 <- df |>
-  filter(!is.na(social_hours), !is.na(family_hours)) |>
+p2 <- df %>% 
+  filter(!is.na(social_hours), !is.na(family_hours)) %>% 
   mutate(
     social_hours = factor(social_hours, levels = c("1-2", "3-4", "4-5", "5-6", "6+")),
     family_hours = factor(family_hours, levels = c("1-2", "3-4", "4-5", "5-6", "6+"))
-  ) |>
+  ) %>% 
   ggplot(aes(x = social_hours, fill = family_hours)) +
   geom_bar(position = "fill") +
   scale_y_continuous(labels = percent_format()) +
@@ -291,12 +289,12 @@ p3 <- df %>%
   ) +
   theme_minimal()
 
-p4 <- df |>
+p4 <- df %>% 
   mutate(
     age_group = cut(age, breaks = c(13, 20, 25, 30, 50),
                     labels = c("13-20", "21-25", "26-30", "30+")),
     social_hours = factor(social_hours, levels = c("1-2", "3-4", "4-5", "5-6", "6+"))
-  ) |>
+  ) %>% 
   ggplot(aes(x = age_group, fill = social_hours)) +
   geom_bar(position = "fill") +
   scale_y_continuous(labels = percent_format()) +
@@ -308,8 +306,8 @@ p4 <- df |>
   ) +
   theme_minimal()
 
-p5 <- df |>
-  filter(!is.na(addicted_bin)) |>
+p5 <- df %>% 
+  filter(!is.na(addicted_bin)) %>% 
   ggplot(aes(x = social_hours_n, fill = factor(addicted_bin))) +
   geom_histogram(position = "fill", binwidth = 1) +
   scale_y_continuous(labels = percent_format()) +
@@ -323,7 +321,6 @@ p5 <- df |>
   ) +
   theme_minimal()
 
-library(patchwork)
 (p4 + p1) / (p2 + p3) / p5
 ```
 
@@ -340,6 +337,7 @@ library(patchwork)
   logistic regression, reducing the effective sample.
 
 # Analysis plan
+
 
 ## First research question
 
@@ -382,8 +380,7 @@ validation, leading to potential input errors.
 
 ## Third research question
 
-*Do people with higher social media screen time spend less time with
-their family?*
+*Do people with higher social media screen time spend less time with their family?*
 
 Variables: `social_hours_n`, `family_hours_n` and `profession`
 
@@ -398,21 +395,26 @@ Measurement inconsistency: different interpretations of "family time" or
 
 ## Fourth research question
 
-*Are women more influenced by social media advertising than men?*
+*Does the perceived influence of social media advertising on purchasing decisions differ between men and women?*
 
 Variables: `ad_influence` and `gender`.
 
-Approach: compare advertising responsiveness across genders. Compare the
-distribution of the `ad_influence` variable across genders and assess
-whether the difference is substantively meaningful. We will use
-frequency distribution analysis and cross-tabulation.
+Approach: The analysis will use Exploratory Data analysis (EDA). 
+Frequency tables and cross-tabulations will be used to examine how the advertising influence variable is distributed across genders. The results will then be visualized using group bar charts showing the percentage of each genders response. 
+A Chi-square test of independence could also be conducted to assess if the differences between genders are statically significant. (Are they large enough to be significant at the 5% level?)
 
-Risks: self-reported bias.
+
+Cleaning transformation: The gender must be standardized, to ensure consistent coding of “Male” and “Female”.
+The responses also have to be converted into an ordered factor so that categories are displayed from “strongly agree” to “Strongly disagree”. 
+
+Risks: The data is self-reported so there is a bias that affects the responses. 
+The number of male and female participants are uneven, which may influence comparisons and other results. 
+There may be other factors like age, profession, time spent on media, etc, that could affect purchasing behavior. Gender alone may not explain the observed differences.
+
 
 ## Fifth research question
 
-*Can we predict that someone considers themselves addicted to social
-media?*
+*Can we predict that someone considers themselves addicted to social media?*
 
 Variables: outcome: `addicted_bin` (1 = Yes, 0 = No, "Not sure"
 excluded) and predictors: `age`, `gender`, `social_hours_n`,
@@ -439,11 +441,20 @@ findings to other professional groups. The source data was collected via
 a Google Form without strict validation, leading to potential input
 errors.
 
-# Workflow organisation ?????
 
-## Code style
 
-We will follow the tidyverse style ..?????
+
+# Workflow Organization
+
+## Code Style
+
+Style Guide: we will follow the tidyverse style guide, as it is the industry standard for R data projects, ensuring high readability and consistency.
+
+Enforcement:
+
+Linting: we will use the styler package to automatically format code according to the style guide before each commit.
+
+Automation:We will integrate a pre-commit hook that runs the linter, preventing any non-compliant code from entering the repository.                       
 
 ## Packages
 
@@ -455,6 +466,19 @@ renders identically across machines. The `renv.lock` file will be
 committed to the repo, large cache folders will be excluded via
 `.gitignore`.
 
-## Git workflow
+## Git Workflow
+Branching Strategy: We will follow a Feature Branch Workflow.
+The main branch will always contain stable, production-ready code.
+Every new task (e.g., "Add data cleaning script," "Create correlation plot") will be developed on a specific branch (e.g., feature/data-cleaning).
+Once a feature is complete and passes linting, we will perform a Pull Request to merge it into main. This allows for code review and history tracking.
 
-Each team member works on ...????
+## gitignore
+To keep the repository lightweight and secure, the .gitignore file will exclude the following:
+
+Raw Data: Large or sensitive source files (e.g., Social Media Impact on Daily Lives.csv) should generally be kept out of version control if they are large or private, or managed via Data Version Control (DVC) if they change frequently.
+
+Environment Files: Any .env files containing API keys, database credentials, or secret configuration variables (to prevent hardcoding sensitive information).
+
+Rendered Outputs: Temporary files, plots, or HTML reports generated by the analysis (e.g., .html, .pdf, .png).
+
+Project Cache: Local folder structures like .Rproj.user/ or the .Rhistory file.
