@@ -29,7 +29,7 @@ library(patchwork)
 
 ```{r load-data}
 #| include: false
-df_raw <- read_csv("Social_Media_Impact_on_Daily_Lives.csv")
+df_raw <- read_csv("Data/Social_Media_Impact_on_Daily_Lives.csv")
 
 # Rename columns to short
 df <- df_raw %>% 
