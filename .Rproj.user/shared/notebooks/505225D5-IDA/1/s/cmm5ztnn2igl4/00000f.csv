@@ -1,8 +1,0 @@
-"0","#Or just for specific columns"
-"0","unique_checker_specific_columns <- function(dataset, columns) {"
-"0","  for (col in columns) {"
-"0","    cat(""\nColumn:"",col, ""\n"")"
-"0","    print(unique(dataset[[col]]))"
-"0","  }"
-"0","}"
-"0",""
