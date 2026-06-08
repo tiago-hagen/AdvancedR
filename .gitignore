@@ -2,6 +2,10 @@
 .Rhistory
 .Rapp.history
 
+GroupProject.html
+GroupProject_files/
+
+
 # Session Data files
 .RData
 .RDataTmp
