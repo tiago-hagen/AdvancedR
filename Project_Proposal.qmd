@@ -84,7 +84,17 @@ df <- df %>%
 
 # Dataset & research questions
 
-## Source and licence
+## Reliability of License , strong source
+We searched for a more complex dataset so we could analyse the relationships between columns and not only one column to the others.
+
+
+
+## 3.4 
+There is no official documentation for the spreadsheet. They provided the data just following the study. The problems with the data have already been stated.
+
+
+
+## Source and licence_
 
 The dataset is titled "Social Media Impact on Daily Lives" and can be
 downloaded
@@ -143,6 +153,10 @@ Using logistic regression, we will model the binary outcome `addicted`
 as a function of age, gender, social media hours, and perceived
 benefits.
 
+
+## Focus questions:
+**Can we predict that someone considers themselves addicted to social media?**\ and 
+**Do people with higher social media screen time spend less time with their family?**\
 
 ## Context and target audience
 
