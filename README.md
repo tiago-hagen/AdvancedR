@@ -17,7 +17,7 @@
 
 - **Source:**  [URL](https://data.mendeley.com/datasets/9s2nmbxkrs/2/files/6647758b-2eca-4158-a49e-a82611be62f0) 
 - **Licence:** CC BY 4.0 
-- **Description:** The dataset contains 522 rows and 16 columns. Each row represents one survey respondent. 
+- **Description:** This dataset explores the impact of social media on daily life, based on a survey of approximately 522 respondents. It captures variables such as screen time, perceived personal benefits, self-reported social media addiction, time spent with family, influence of advertising, and respondents' profession. The data is primarily categorical, with a few numeric variables.  
 
 ## Group Members
 
