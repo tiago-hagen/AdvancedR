@@ -9,11 +9,6 @@
 1. Can we predict that someone considers themselves addicted to social media?
 2. Do people with higher social media screen time spend less time with their family?
 
-3. Do younger people spend more time on social media?
-4. Would people with higher screen time consider themselves addicted?
-5. Does the perceived influence of social media advertising on purchasing decisions differ between men and women?
-
-
 
 
 
