@@ -7,11 +7,11 @@
 ## Research Questions
 
 1. Can we predict that someone considers themselves addicted to social media?
-2. <!-- Do people with higher social media screen time spend less time with their family? -->
+2. Do people with higher social media screen time spend less time with their family?
 
-3. <!-- Do younger people spend more time on social media?**\ -->
-4. <!-- Would people with higher screen time consider themselves addicted? -->
-5. <!-- Does the perceived influence of social media advertising on purchasing decisions differ between men and women? -->
+3. Do younger people spend more time on social media?
+4. Would people with higher screen time consider themselves addicted?
+5. Does the perceived influence of social media advertising on purchasing decisions differ between men and women?
 
 
 
@@ -20,9 +20,9 @@
 
 ## Dataset
 
-- **Source:** <!-- [URL or citation](https://data.mendeley.com/datasets/9s2nmbxkrs/2/files/6647758b-2eca-4158-a49e-a82611be62f0) -->
-- **Licence:** <!-- CC BY 4.0 -->
-- **Description:** <!-- The dataset contains `r nrow(df)` rows and `r ncol(df_raw)` columns. Each row represents one survey respondent. -->
+- **Source:**  [URL or citation](https://data.mendeley.com/datasets/9s2nmbxkrs/2/files/6647758b-2eca-4158-a49e-a82611be62f0) 
+- **Licence:** CC BY 4.0 
+- **Description:** The dataset contains `r nrow(df)` rows and `r ncol(df_raw)` columns. Each row represents one survey respondent. 
 
 ## Group Members
 
