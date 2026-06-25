@@ -17,7 +17,7 @@
 
 - **Source:**  [URL](https://data.mendeley.com/datasets/9s2nmbxkrs/2/files/6647758b-2eca-4158-a49e-a82611be62f0) 
 - **Licence:** CC BY 4.0 
-- **Description:** The dataset contains `r nrow(df)` rows and `r ncol(df_raw)` columns. Each row represents one survey respondent. 
+- **Description:** The dataset contains 522 rows and 16 columns. Each row represents one survey respondent. 
 
 ## Group Members
 
