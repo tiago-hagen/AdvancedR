@@ -31,7 +31,7 @@
 |  Louisa DJEBROUN    |  LouisaDj              |
 |  Tiago HAGEN    |   tiago-hagen             |
 |  Marco ANTON    |                |
-|  Nizami AZIZOV    |                |
+|  Nizami AZIZOV    |   nizami1878             |
 
 
 ## Repository Structure !!!!!!!!!!!
