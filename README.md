@@ -6,7 +6,7 @@
 
 ## Research Questions
 
-1. <-- Can we predict that someone considers themselves addicted to social media? -->
+1. Can we predict that someone considers themselves addicted to social media?
 2. <!-- Do people with higher social media screen time spend less time with their family? -->
 
 3. <!-- Do younger people spend more time on social media?**\ -->
