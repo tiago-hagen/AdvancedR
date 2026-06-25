@@ -31,22 +31,25 @@
 
 ## Repository Structure
 
-```
+
 <!-- data/raw/        read-only raw data and licence documentation -->
 <!-- data/processed/  cleaned data produced by code/02_clean.R -->
-data        read-only raw data
 <!-- code/            numbered R scripts (01 download → 02 clean → 03 EDA → 04 analysis) -->
 <!-- docs/            rendered Quarto website output (auto-generated, do not edit) -->
-Project_Proposal.qmd     W07 project proposal
 <!-- report.qmd       final analysis report -->
+
+```
+data        read-only raw data
+Project_Proposal.qmd     W07 project proposal
 ```
 
 ## How to reproduce !!!
 
-```r
+
 <!-- # 1. Install dependencies -->
 <!-- renv::restore()   # if using renv, otherwise install packages manually -->
 
+```r
 # 1. Run the pipeline in order
 source("code/01_download.R")
 source("code/02_clean.R")
