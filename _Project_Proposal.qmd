@@ -89,7 +89,7 @@ We searched for a more complex dataset so we could analyse the relationships bet
 
 
 
-##Lack of documentation 
+## 3.4 
 There is no official documentation for the spreadsheet. They provided the data just following the study. The problems with the data have already been stated.
 
 
@@ -173,7 +173,6 @@ Interactive Dashboard would be suitable for this audience.
 ```{r glimpse}
 glimpse(df)
 ```
-
 
 ```{r summary-stats}
 df %>% 
@@ -512,8 +511,6 @@ Project Cache: Local folder structures like .Rproj.user/ or the .Rhistory file.
 
 ### Sanity Check (Data Validation)
 ```{r}
-#| label: sanity-check-addiction-model
-
 # 1. Do the variables exist, with the right type?
 glimpse(df)
 

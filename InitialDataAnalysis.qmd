@@ -1,25 +1,13 @@
 ---
-title: "Group Project Advanced Statistical Programming using R"
-author: "Tiago HAGEN, Marco ANTON, Nizami AZIZOV and Louisa DJEBROUN"
-date: today
-format:
-  html:
-    toc: true
-    toc-depth: 3
-    code-fold: true
-    code-tools: true
-    number-sections: true
-    theme: cosmo
-execute:
-  warning: false
-  message: false
-editor: 
-  markdown: 
-    wrap: 72
+title: "Initial Data Analysis"
 ---
 
-# Initial data analysis
+```{r setup}
+#| include: false
+source("setup.R")
+```
 
+# Initial data analysis
 ```{r glimpse}
 glimpse(df)
 ```
@@ -30,7 +18,7 @@ df %>%
   summary()
 ```
 
-```{r categorical-counts}
+```{r}
 #| label: tbl-counts
 #| tbl-cap: "Response counts for key categorical variables"
 
@@ -63,7 +51,7 @@ which limits precision.
 
 ## Distribution plot
 
-```{r fig-distribution}
+```{r}
 #| label: fig-dist
 #| fig-cap: "Distribution of daily social media usage and age by self-reported addiction status"
 #| fig-width: 10

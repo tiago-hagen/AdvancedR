@@ -1,0 +1,28 @@
+project:
+  type: website
+
+website:
+  title: "Social Media Impact Analysis"
+  navbar:
+    left:
+      - href: index.qmd
+        text: "Home & Overview"
+      - href: InitialDataAnalysis.qmd
+        text: "Initial Data Analysis"
+      - href: AnalysisPlan.qmd
+        text: "Analysis Plan & Models"
+      - href: WorkflowOrganisation.qmd
+        text: "Project Workflow"
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    code-tools: true
+    number-sections: true
+    
+execute:
+  warning: false
+  message: false

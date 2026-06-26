@@ -1,22 +1,11 @@
 ---
-title: "Group Project Advanced Statistical Programming using R"
-author: "Tiago HAGEN, Marco ANTON, Nizami AZIZOV and Louisa DJEBROUN"
-date: today
-format:
-  html:
-    toc: true
-    toc-depth: 3
-    code-fold: true
-    code-tools: true
-    number-sections: true
-    theme: cosmo
-execute:
-  warning: false
-  message: false
-editor: 
-  markdown: 
-    wrap: 72
+title: "Analysis Plan"
 ---
+
+```{r setup}
+#| include: false
+source("setup.R")
+```
 
 # Analysis plan
 
