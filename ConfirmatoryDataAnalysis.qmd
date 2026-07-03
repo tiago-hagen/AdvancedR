@@ -1,0 +1,161 @@
+---
+title: "Group Project Advanced Statistical Programming using R"
+author: "Tiago HAGEN, Marco ANTON, Nizami AZIZOV and Louisa DJEBROUN"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    code-tools: true
+    number-sections: true
+    theme: cosmo
+execute:
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup}
+#| include: false
+library(tidyverse)
+library(scales)
+library(knitr)
+library(patchwork)
+
+```
+
+```{r load-data}
+#| include: false
+df_raw <- read_csv("Data/Social_Media_Impact_on_Daily_Lives.csv")
+
+# Rename columns to short
+df <- df_raw %>% 
+  rename(
+    idx             = `...1`,
+    name            = `Enter your name`,
+    age             = `Enter your age (Ex: 20)`,
+    gender          = `What is your gender`,
+    profession      = `What is your profession?`,
+    prof_hours      = `On an average how many hours a day you spend on your profession?`,
+    platforms       = `What social networking sites do you use?`,
+    social_hours    = `On an average how many hours a day do you spend on these sites?`,
+    family_hours    = `On an average how many hours a day do you spend with your family?`,
+    why_use         = `Why do you use these social networking sites?`,
+    benefits        = `What are personal benefits of  using social networking sites?`,
+    when_access     = `When do you access social media websites?`,
+    privacy_effect  = `Do you think privacy policies are effective in social networking sites?`,
+    ad_influence    = `Does social media advertising influence the purchase of your product?`,
+    forget_time     = `When you use social media did you forget about time?`,
+    addicted        = `Do you consider yourself addicted to social media?`
+  ) %>% 
+  # Fix the one row where profession = "male" 
+  mutate(profession = if_else(profession == "male", NA_character_, profession))
+
+# convert to numeric midpoints for regression
+hour_midpoint <- function(x) {
+  case_when(
+    x == "0-2"  ~ 1,
+    x == "1-2"  ~ 1.5,
+    x == "2-4"  ~ 3,
+    x == "4-5"  ~ 4.5,
+    x == "4-6"  ~ 5,
+    x == "5-6"  ~ 5.5,
+    x == "6-8"  ~ 7,
+    x == "6+"   ~ 7,
+    x == "8+"   ~ 9,
+    TRUE        ~ NA_real_
+  )
+}
+
+df <- df %>% 
+  mutate(
+    social_hours_n = hour_midpoint(social_hours),
+    family_hours_n = hour_midpoint(family_hours),
+    addicted_bin   = case_when(
+      addicted == "yes"      ~ 1,
+      addicted == "no"       ~ 0,
+      addicted == "not sure" ~ NA_integer_
+    )
+  )
+```
+
+# Initial data analysis
+
+```{r glimpse}
+glimpse(df)
+```
+
+```{r summary-stats}
+df %>% 
+  select(age, social_hours_n, family_hours_n) %>% 
+  summary()
+```
+
+```{r categorical-counts}
+#| label: tbl-counts
+#| tbl-cap: "Response counts for key categorical variables"
+
+bind_rows(
+  df %>%  count(Variable = "Gender",       Value = gender)      %>%  rename(Count = n),
+  df %>%   count(Variable = "Profession",   Value = profession)  %>%  rename(Count = n),
+  df %>%  count(Variable = "Addicted",     Value = addicted)    %>%  rename(Count = n),
+  df %>%  count(Variable = "Forget time",  Value = forget_time) %>%  rename(Count = n)
+) %>% 
+  drop_na(Value) %>% 
+  kable()
+```
+
+```{r}
+df_raw %>% 
+  summarise(across(everything(), ~ sum(is.na(.)))) %>% 
+  pivot_longer(everything(), names_to = "Variable", values_to = "Missing") %>% 
+  filter(Missing > 0)
+
+
+df_raw %>% 
+  filter(`What is your profession?` == "male")
+```
+## Infer Testing - Practical 09 - 3.4
+A two-sample t-test based on a difference in means was initially considered; however, this approach was not appropriate because the explanatory variable was not binary (it contained more than two categories). As a result, the assumptions for a two-sample t-test were not met, and the method was not suitable for the data structure.
+
+Subsequently, a permutation test for linear association (simple linear regression using the slope statistic) was conducted to assess the relationship between family time and social (screen) time.
+
+```{r}
+
+summary(df$family_hours)
+
+df_clean <- df %>%
+  select(social_hours_n, family_hours_n) %>%
+  drop_na()
+
+#Null distribution
+null_dist <- df_clean %>%
+  specify(social_hours_n ~ family_hours_n) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat="slope")
+
+#2. 
+obs_slope <- df_clean %>%
+  specify(social_hours_n ~ family_hours_n) %>%
+  calculate(stat="slope")
+
+# 3. The p-value
+null_dist %>%
+  get_p_value(obs_stat = obs_slope, direction = "two-sided")
+
+# 4. A 95% confidence interval around the observed difference
+null_dist |>
+  get_confidence_interval(point_estimate = obs_slope, level = 0.95)
+
+# 5. Visualise where the observed difference falls in the null distribution
+null_dist |>
+  visualize() +
+  shade_p_value(obs_stat = obs_slope, direction = "two-sided")
+
+```
+## The permutation test produced a p-value of 0.34, which is greater than the 0.05 significance level. Therefore, we fail to reject the null hypothesis and conclude that there is insufficient evidence of an association between the variables. The 95% confidence interval (-0.10, 0.10) includes 0, further indicating that the true effect may be zero.
+

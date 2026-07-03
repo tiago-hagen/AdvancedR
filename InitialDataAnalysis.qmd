@@ -21,6 +21,8 @@ editor:
 # Initial data analysis
 
 ```{r glimpse}
+install.packages("plotly")
+library(plotly)
 glimpse(df)
 ```
 
@@ -122,7 +124,7 @@ p2 <- df %>%
   ) %>% 
   ggplot(aes(x = social_hours, fill = family_hours)) +
   geom_bar(position = "fill") +
-  scale_y_continuous(labels = percent_format()) +
+  scale_y_continuous(labels = scales::percent_format()) +
   labs(
     title = "Social Media Hours vs. Family Time",
     x = "Daily social media hours",
@@ -130,6 +132,9 @@ p2 <- df %>%
     fill = "Family hours/day"
   ) +
   theme_minimal()
+
+ggplotly(p2)
+
 
 p3 <- df %>%
   count(
@@ -184,7 +189,10 @@ p5 <- df %>%
   ) +
   theme_minimal()
 
-(p4 + p1) / (p2 + p3) / p5
+
+(p4 + p1) / (p2 + p3) / (p5)
+
+p6
 ```
 
 ## Data quality
