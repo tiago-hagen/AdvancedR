@@ -22,45 +22,6 @@ editor:
 
 ## First research question
 
-*Do younger people spend more time on social media?* Variables: `age`
-and `social_hours`
-
-Approach: examine whether younger users spend more time on social media.
-We will use Exploratory Data Analysis (EDA). Since our variables are
-largely categorical or ordinal, we will focus on frequency distribution
-analysis and cross-tabulation. These methods are appropriate because
-they allow for the identification of patterns and trends in user
-behavior without requiring complex predictive modeling, which may be
-over-fitted given the sample size of 522.\
-
-Cleaning needed: convert `social_hours` to numeric, we will map the
-string-based time intervals (e.g., "1-2", "6+") to numeric mid-points
-(e.g., 1.5, 6.5) to enable basic arithmetic operations.
-
-Risks: age range is 13–50 but highly concentrated at 22–27.
-
-## Second research question
-
-*Would people with higher screen time consider themselves addicted?*
-
-Variables: `social_hours_n`, `benefits` and `addicted`
-
-Approach: assess whether higher screen time is associated with feeling
-addicted. Explore whether greater perceived benefits are linked to
-higher addiction perception. We will use Pearson or Spearman correlation
-(depending on normality).
-
-Cleaning needed: parse `benefits` into a count variable. We will
-normalize the categorical responses to ensure consistent formatting for
-grouping and aggregation. Separating the used platforms and benefits in
-individual columns in order for the analysis.
-
-Risks: self-reported bias (screen time and addiction are subjective).
-The source data was collected via a Google Form without strict
-validation, leading to potential input errors.
-
-## Third research question
-
 *Do people with higher social media screen time spend less time with
 their family?*
 
@@ -75,35 +36,7 @@ Confounding variables: work/study requirements may affect screen time.\
 Measurement inconsistency: different interpretations of "family time" or
 "screen time".
 
-## Fourth research question
-
-*Does the perceived influence of social media advertising on purchasing
-decisions differ between men and women?*
-
-Variables: `ad_influence` and `gender`.
-
-Approach: The analysis will use Exploratory Data analysis (EDA).
-Frequency tables and cross-tabulations will be used to examine how the
-advertising influence variable is distributed across genders. The
-results will then be visualized using group bar charts showing the
-percentage of each genders response. A Chi-square test of independence
-could also be conducted to assess if the differences between genders are
-statically significant. (Are they large enough to be significant at the
-5% level?)
-
-Cleaning transformation: The gender must be standardized, to ensure
-consistent coding of “Male” and “Female”. The responses also have to be
-converted into an ordered factor so that categories are displayed from
-“strongly agree” to “Strongly disagree”.
-
-Risks: The data is self-reported so there is a bias that affects the
-responses. The number of male and female participants are uneven, which
-may influence comparisons and other results. There may be other factors
-like age, profession, time spent on media, etc, that could affect
-purchasing behavior. Gender alone may not explain the observed
-differences.
-
-## Fifth research question
+## Second research question
 
 *Can we predict that someone considers themselves addicted to social
 media?*
