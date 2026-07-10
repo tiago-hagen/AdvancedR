@@ -24,6 +24,7 @@ library(tidyverse)
 library(scales)
 library(knitr)
 library(patchwork)
+library(infer)
 
 ```
 

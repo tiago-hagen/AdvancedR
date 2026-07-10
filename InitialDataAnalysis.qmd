@@ -17,12 +17,13 @@ editor:
   markdown: 
     wrap: 72
 ---
-
+```{r setup}
+#| include: false
+source("setup.R")
+```
 # Initial data analysis
 
 ```{r glimpse}
-install.packages("plotly")
-library(plotly)
 glimpse(df)
 ```
 
@@ -99,7 +100,32 @@ p2 <- df %>%
 
 p2 + p1
 ```
-
+```{r}
+#| label: fig-ad-influence
+#| fig-cap: "Social media advertising shows a similar distribution of influence on purchasing decisions for both male and female respondents."
+#| fig-alt: "A grouped bar chart comparing the influence of social media advertising on purchasing decisions between men and women. The distributions are very similar across all categories."
+df %>%
+  count(gender, ad_influence) %>%
+  group_by(gender) %>%
+  mutate(percent = n / sum(n) * 100) %>%
+  ggplot(aes(x = ad_influence, y = percent, fill = gender)) +
+  geom_col(position = "dodge") +
+  # Colorblind-safe color palette
+  scale_fill_viridis_d(option = "cividis", end = 0.8) +
+  theme_minimal() +
+  labs(
+    #  Title states the finding, not just the variables
+    title = "Advertising influences purchasing decisions similarly across genders",
+    subtitle = "Self-reported influence levels by gender",
+    # Dropped redundant x-axis label (y = NULL logic applied to x)
+    x = NULL, 
+    #  Axis label with units (%)
+    y = "Proportion within gender group (%)",
+    fill = "Gender",
+    #  Data source caption
+    caption = "Data Source: Social Media Impact on Daily Lives (2025)"
+    )
+```
 ```{r}
 #| fig-width: 14
 #| fig-height: 16
@@ -116,47 +142,31 @@ p1 <- ggplot(df, aes(
     fill = "Considered Addicted?"
   )
 
-p2 <- df %>% 
+p2_interaktiv <- df %>% 
   filter(!is.na(social_hours), !is.na(family_hours)) %>% 
   mutate(
     social_hours = factor(social_hours, levels = c("1-2", "3-4", "4-5", "5-6", "6+")),
     family_hours = factor(family_hours, levels = c("1-2", "3-4", "4-5", "5-6", "6+"))
   ) %>% 
-  ggplot(aes(x = social_hours, fill = family_hours)) +
-  geom_bar(position = "fill") +
-  scale_y_continuous(labels = scales::percent_format()) +
+  # 1. Zahlen selbst berechnen für den perfekten Hover-Text
+  count(social_hours, family_hours) %>% 
+  group_by(social_hours) %>% 
+  mutate(percent = n / sum(n) * 100) %>% 
+  # 2. Den "text" für das Hover-Feld definieren
+  ggplot(aes(x = social_hours, y = percent, fill = family_hours, 
+             text = paste0("Family Time: ", family_hours, "<br>",
+                           "Anteil: ", round(percent, 1), " %"))) +
+  geom_col() +  # Wichtig: geom_col() statt geom_bar(), da wir Y selbst haben
   labs(
     title = "Social Media Hours vs. Family Time",
     x = "Daily social media hours",
-    y = "Proportion",
+    y = "Proportion (%)",
     fill = "Family hours/day"
   ) +
   theme_minimal()
 
-ggplotly(p2)
-
-
-p3 <- df %>%
-  count(
-    gender = gender,
-    advertising_influence = ad_influence
-  ) %>%
-  group_by(gender) %>%
-  mutate(percent = n / sum(n) * 100) %>%
-  ggplot(aes(
-    x = advertising_influence,
-    y = percent,
-    fill = gender
-  )) +
-  geom_col(position = "dodge") +
-  labs(
-    title = "Influence of Social Media Advertising by Gender",
-    x = "Advertising influence on purchase decision",
-    y = "Percentage within gender group",
-    fill = "Gender"
-  ) +
-  theme_minimal()
-
+#Interaktiv machen!
+ggplotly(p2_interaktiv, tooltip = "text")
 p4 <- df %>% 
   mutate(
     age_group = cut(age, breaks = c(13, 20, 25, 30, 50),
@@ -190,9 +200,8 @@ p5 <- df %>%
   theme_minimal()
 
 
-(p4 + p1) / (p2 + p3) / (p5)
+(p4 + p1) / p5
 
-p6
 ```
 
 ## Data quality

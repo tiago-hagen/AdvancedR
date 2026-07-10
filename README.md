@@ -59,3 +59,57 @@ source("code/04_analysis.R")
 # 3. Render the website
 quarto::quarto_render()
 ```
+## Exercise 2.5: Share one improvement
+
+**What changed and why:**
+I improved the advertising plot by using a colorblind-safe palette (`viridis`) and updating the title to state the main finding, which makes the conclusion instantly clear to the reader.
+
+### Before
+```r
+p3 <- df %>%
+  count(
+    gender = gender,
+    advertising_influence = ad_influence
+  ) %>%
+  group_by(gender) %>%
+  mutate(percent = n / sum(n) * 100) %>%
+  ggplot(aes(
+    x = advertising_influence,
+    y = percent,
+    fill = gender
+  )) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Influence of Social Media Advertising by Gender",
+    x = "Advertising influence on purchase decision",
+    y = "Percentage within gender group",
+    fill = "Gender"
+  ) +
+  theme_minimal()
+```
+
+### After
+```r
+#| label: fig-ad-influence
+#| fig-cap: "Social media advertising shows a similar distribution of influence on purchasing decisions for both male and female respondents."
+#| fig-alt: "A grouped bar chart comparing the influence of social media advertising on purchasing decisions between men and women. The distributions are very similar across all categories."
+
+df %>%
+  count(gender, ad_influence) %>%
+  group_by(gender) %>%
+  mutate(percent = n / sum(n) * 100) %>%
+  ggplot(aes(x = ad_influence, y = percent, fill = gender)) +
+  geom_col(position = "dodge") +
+  #  Colorblind-safe color palette
+  scale_fill_viridis_d(option = "cividis", end = 0.8) +
+  theme_minimal() +
+  labs(
+    #  Title states the finding, not just the variables
+    title = "Advertising influences purchasing decisions similarly across genders",
+    subtitle = "Self-reported influence levels by gender",
+    x = NULL, 
+    y = "Proportion within gender group (%)",
+    fill = "Gender",
+    caption = "Data Source: Social Media Impact on Daily Lives (2025)"
+  )
+```
