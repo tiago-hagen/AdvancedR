@@ -2,22 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tiago-hagen.github.io/AdvancedR/WorkflowOrganisation.html</loc>
-    <lastmod>2026-06-27T09:18:39.437Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tiago-hagen.github.io/AdvancedR/index.html</loc>
-    <lastmod>2026-06-27T09:18:39.530Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tiago-hagen.github.io/AdvancedR/AnalysisPlan.html</loc>
-    <lastmod>2026-06-27T09:18:39.423Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tiago-hagen.github.io/AdvancedR/CONTRIBUTING.html</loc>
-    <lastmod>2026-06-27T09:18:39.426Z</lastmod>
+    <lastmod>2026-07-10T12:39:37.979Z</lastmod>
   </url>
   <url>
     <loc>https://tiago-hagen.github.io/AdvancedR/InitialDataAnalysis.html</loc>
-    <lastmod>2026-06-27T09:18:39.429Z</lastmod>
+    <lastmod>2026-07-10T12:40:54.929Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tiago-hagen.github.io/AdvancedR/CONTRIBUTING.html</loc>
+    <lastmod>2026-07-03T13:39:23.353Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tiago-hagen.github.io/AdvancedR/AnalysisPlan.html</loc>
+    <lastmod>2026-07-10T11:33:39.212Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tiago-hagen.github.io/AdvancedR/ConfirmatoryDataAnalysis.html</loc>
+    <lastmod>2026-07-10T12:39:37.866Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tiago-hagen.github.io/AdvancedR/Dataset.html</loc>
+    <lastmod>2026-07-10T12:39:37.899Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tiago-hagen.github.io/AdvancedR/Project_Proposal.html</loc>
+    <lastmod>2026-07-10T12:39:37.942Z</lastmod>
   </url>
 </urlset>
