@@ -1,0 +1,27 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Social Media Impact on Daily Lives"
+  navbar:
+    left:
+      - text: "README"
+        file: README.md
+      - text: "Project Proposal"
+        file: Project_Proposal.qmd
+      - text: "Dataset"
+        file: Dataset.qmd
+      - text: "Initial Data Analysis"
+        file: InitialDataAnalysis.qmd
+      - text: "Analysis Plan"
+        file: AnalysisPlan.qmd
+      - text: "ConfirmatoryDataAnalysis"
+        file: ConfirmatoryDataAnalysis.qmd
+      - text: "Organisation"
+        file: WorkflowOrganisation.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
