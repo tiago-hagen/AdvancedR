@@ -8,8 +8,6 @@ website:
     left:
       - text: "README"
         file: README.md
-      - text: "Project Proposal"
-        file: Project_Proposal.qmd
       - text: "Dataset"
         file: Dataset.qmd
       - text: "Initial Data Analysis"
