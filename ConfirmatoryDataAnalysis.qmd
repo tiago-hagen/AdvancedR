@@ -21,6 +21,7 @@ editor:
 ```{r setup}
 #| include: false
 library(tidyverse)
+library(infer)
 library(scales)
 library(knitr)
 library(patchwork)

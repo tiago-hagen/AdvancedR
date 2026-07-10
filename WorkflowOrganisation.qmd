@@ -70,6 +70,8 @@ Project Cache: Local folder structures like .Rproj.user/ or the .Rhistory file.
 * **Interpretation:** The coefficients will show us how strongly each predictor influences the likelihood of perceived addiction, holding all other variables constant.
 
 ### Sanity Check (Data Validation)
+
+
 ```{r}
 #| label: sanity-check-addiction-model
 
