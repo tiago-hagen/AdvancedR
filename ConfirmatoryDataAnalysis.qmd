@@ -21,11 +21,13 @@ editor:
 ```{r setup}
 #| include: false
 library(tidyverse)
+library(infer)
 library(scales)
 library(knitr)
 library(patchwork)
 library(infer)
-
+library(gt)
+library(broom)
 ```
 
 ```{r load-data}
@@ -158,5 +160,50 @@ null_dist |>
   shade_p_value(obs_stat = obs_slope, direction = "two-sided")
 
 ```
-## The permutation test produced a p-value of 0.34, which is greater than the 0.05 significance level. Therefore, we fail to reject the null hypothesis and conclude that there is insufficient evidence of an association between the variables. The 95% confidence interval (-0.10, 0.10) includes 0, further indicating that the true effect may be zero.
+The permutation test produced a p-value of 0.34, which is greater than the 0.05 significance level. Therefore, we fail to reject the null hypothesis and conclude that there is insufficient evidence of an association between the variables. The 95% confidence interval (-0.10, 0.10) includes 0, further indicating that the true effect may be zero.
+
+
+
+## Practical 10: Exercise 2.2: Build a gt table
+
+
+```{r}
+model_df <- df %>%
+  mutate(forget_time = factor(forget_time, levels = c("no", "sometimes", "yes"))) %>%
+  drop_na(addicted_bin, social_hours_n, forget_time, age, gender)
+
+fit_rq5 <- glm(addicted_bin ~ social_hours_n + forget_time + age + gender,
+               data = model_df, family = binomial)
+
+tidy(fit_rq5, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(term = recode(term,
+    "(Intercept)"             = "Intercept",
+    "social_hours_n"          = "Social media hours (numeric)",
+    "forget_timesometimes"    = "Forgets time: sometimes",
+    "forget_timeyes"          = "Forgets time: yes",
+    "age"                     = "Age",
+    "gendermale"              = "Gender: male"
+  )) %>%
+  select(term, estimate, conf.low, conf.high, p.value) %>%
+  gt() %>%
+  fmt_number(c(estimate, conf.low, conf.high), decimals = 2) %>%
+  fmt_number(p.value, decimals = 3) %>%
+  cols_label(
+    term = "Predictor",
+    estimate = "OR",
+    p.value = "p-value"
+  ) %>%
+  tab_spanner(label = "95% CI", columns = c(conf.low, conf.high)) %>%
+  cols_label(conf.low = "Lower", conf.high = "Upper") %>%
+  tab_header(
+    title = "Can we predict that someone considers themselves addicted to social media?",
+    subtitle = "Logistic regression, n = 397"
+  ) 
+```
+
+We built a gt table to present the results of our logistic regression model for the Predictive Research questions, which predicts whether a person considers themselves addicted to social media. 
+The table shows the odds ratio (OR) for each predictor, its confidence interval, and its p-value.
+We use this table to identify which predictors are statistically significant (p < 0.05): our results show that screen time and forgetting time are significant predictors, while age and gender are not.
+Concerning the OR, social media hours has 1.74, meaning each additional hour of screen time is associated with 74% higher odds of self-reported addiction. Forgetting time shows the strongest effect with an OR of 5,082.54 for people who often forget about time. Age and gender are not statistically significant predictors in our model.
+
 

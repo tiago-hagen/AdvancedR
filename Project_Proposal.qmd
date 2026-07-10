@@ -13,8 +13,8 @@ format:
 execute:
   warning: false
   message: false
-editor: 
-  markdown: 
+editor:
+  markdown:
     wrap: 72
 ---
 
