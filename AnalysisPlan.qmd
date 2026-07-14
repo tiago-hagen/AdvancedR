@@ -27,9 +27,7 @@ their family?*
 
 Variables: `social_hours_n`, `family_hours_n` and `profession`
 
-Approach: scatter plot. Determine whether increased screen time is
-associated with reduced family interaction. We will use Pearson or
-Spearman correlation (depending on normality).
+Approach: We initially considered exploring the relationship between screen time and family interaction using scatter plots, jitter plots, and simple Spearman correlation analyses. However, because both variables are measured on ordinal scales, these visualizations resulted in substantial overlap and did not provide meaningful insights. Consequently, we decided to abandon these exploratory approaches and instead apply the inferential methods learned in class. Specifically, we used inference framework to test whether there is evidence of an association between the variables by evaluating the slope statistic rather than comparing differences in means. 
 
 Risks: self-reported bias (screen time and addiction are subjective).\
 Confounding variables: work/study requirements may affect screen time.\
