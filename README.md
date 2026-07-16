@@ -25,18 +25,3 @@
 |  Tiago HAGEN    |   tiago-hagen             |
 |  Marco ANTON    |   mAnton675             |
 |  Nizami AZIZOV    |   nizami1878             |
-
-
-## Repository Structure
-
-
-<!-- data/raw/        read-only raw data and licence documentation -->
-<!-- data/processed/  cleaned data produced by code/02_clean.R -->
-<!-- code/            numbered R scripts (01 download → 02 clean → 03 EDA → 04 analysis) -->
-<!-- docs/            rendered Quarto website output (auto-generated, do not edit) -->
-<!-- report.qmd       final analysis report -->
-
-```
-data        read-only raw data
-Project_Proposal.qmd     W07 project proposal
-```
