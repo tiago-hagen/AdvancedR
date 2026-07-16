@@ -84,28 +84,25 @@ df <- df %>%
 
 # Dataset & research questions
 
-## Reliability of License , strong source
+## Data Source Reliability and Privacy
 
-We searched for a more complex dataset so we could analyse the
-relationships between columns and not only one column to the others.
+We selected a complex, multi-variable dataset from **Mendeley Data**, a reputable and peer-reviewed academic repository for research data. This allows us to analyze intricate relationships across multiple behavioral and demographic columns rather than just simple bivariate correlations.
 
-##Lack of documentation There is no official documentation for the
-spreadsheet. They provided the data just following the study. The
-problems with the data have already been stated.
+**Row Identification and Privacy:** Each row in the dataset represents a single survey respondent and can be uniquely identified by the index column (`idx`) or the `name` column. Although the presence of names technically constitutes Personally Identifiable Information (PII), these entries consist primarily of generic first names or nicknames submitted via an online form, without surnames or contact details. To ensure compliance with data privacy standards and maintain analytical objectivity, the `name` variable is excluded from all statistical modeling and visual explorations.
 
-## Source and licence\_
+## Lack of Documentation
 
-The dataset is titled "Social Media Impact on Daily Lives" and can be
-downloaded
-[here](https://data.mendeley.com/datasets/9s2nmbxkrs/2/files/6647758b-2eca-4158-a49e-a82611be62f0).
-It was collected via a structured online survey on January 2025.
+There is no official codebook or extended technical documentation for the spreadsheet; the data was made available by the authors directly following their study. The inherent limitations and data quality issues resulting from this (e.g., interval-coded hours and data-entry errors) are addressed in the Data Quality section below.
 
-Licence: CC BY 4.0
+## Source and License
+
+The dataset is titled "Social Media Impact on Daily Lives" and can be downloaded [here](https://data.mendeley.com/datasets/9s2nmbxkrs/2/files/6647758b-2eca-4158-a49e-a82611be62f0). It was collected via a structured online survey in January 2025, providing a recent sample of digital consumption habits.
+
+**License:** CC BY 4.0 (explicitly permitting re-use and modification for analytical and educational purposes).
 
 ## What is in it
 
-The dataset contains `r nrow(df)` rows and `r ncol(df_raw)` columns.
-Each row represents one survey respondent. The key variables are:
+The dataset contains `r nrow(df)` rows and `r ncol(df_raw)` columns. Each row represents one survey respondent. The key variables are:
 
 | Variable | Rename | Type | Description |
 |------------------|------------------|------------------|------------------|

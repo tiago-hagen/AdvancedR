@@ -99,6 +99,8 @@ p2 <- df %>%
 
 p2 + p1
 ```
+**Interpretation:** The left histogram reveals that the respondents' ages are heavily concentrated between 18 and 26 years, reflecting a predominantly student-based demographic. The right proportion bar chart demonstrates a clear dependency trend: while users spending 1–3 hours daily mostly report not feeling addicted, the proportion of self-reported addiction ("Yes") expands rapidly as daily screen time exceeds 4 hours.
+
 ```{r}
 #| label: fig-ad-influence
 #| fig-cap: "Social media advertising shows a similar distribution of influence on purchasing decisions for both male and female respondents."
@@ -125,9 +127,12 @@ df %>%
     caption = "Data Source: Social Media Impact on Daily Lives (2025)"
     )
 ```
+**Interpretation:** This grouped bar chart compares the self-reported influence of social media advertising on purchasing behavior across genders. The distributions are remarkably similar, with both males and females most frequently reporting an "often" or "sometimes" influence on their consumer choices. This suggests that gender alone does not explain differences in susceptibility to digital marketing within this sample.
+
 ```{r}
-#| fig-width: 14
-#| fig-height: 16
+#| label: fig-social-addiction
+#| fig-width: 10
+#| fig-height: 6
 p1 <- ggplot(df, aes(
     x = social_hours,
     fill = addicted
@@ -140,7 +145,14 @@ p1 <- ggplot(df, aes(
     y = "Number of Respondents",
     fill = "Considered Addicted?"
   )
+p1
+```
+**Interpretation:** By viewing absolute counts rather than percentages, this chart highlights that the bulk of our sample falls into the 2–5 daily hours range. Within these moderate-to-high usage brackets, the number of users who acknowledge addiction surpasses those who deny it. Notably, the "Not sure" group remains present across all tiers, underscoring the subjective difficulty many individuals face when assessing their own digital dependency.
 
+```{r}
+#| label: fig-family-time
+#| fig-width: 10
+#| fig-height: 6
 p2_interaktiv <- df %>% 
   filter(!is.na(social_hours), !is.na(family_hours)) %>% 
   mutate(
@@ -163,7 +175,13 @@ p2_interaktiv <- df %>%
   theme_minimal()
 
 ggplotly(p2_interaktiv, tooltip = "text")
+```
+**Interpretation:** This interactive proportion chart examines whether high screen time displaces offline family interaction. Contrary to the assumption of a strict negative correlation, the distribution of family time remains surprisingly stable across different social media usage brackets. This indicates that screen time alone does not directly cannibalize family hours, suggesting that factors such as academic workload or living arrangements may act as stronger confounders.
 
+```{r}
+#| label: fig-age-usage
+#| fig-width: 10
+#| fig-height: 6
 p4 <- df %>% 
   mutate(
     age_group = cut(age, breaks = c(13, 20, 25, 30, 50),
@@ -180,7 +198,14 @@ p4 <- df %>%
     fill = "Hours/day"
   ) +
   theme_minimal()
+p4
+```
+**Interpretation:** This visualization categorizes respondents into age brackets to assess generational differences in screen time. Interestingly, daily usage distributions are relatively consistent across all age groups, including older respondents (30+). This finding challenges the stereotype that heavy social media consumption is strictly confined to teenagers and young adults, showing widespread digital engagement across the entire sample.
 
+```{r}
+#| label: fig-binary-addiction
+#| fig-width: 10
+#| fig-height: 6
 p5 <- df %>% 
   filter(!is.na(addicted_bin)) %>% 
   ggplot(aes(x = social_hours_n, fill = factor(addicted_bin))) +
@@ -195,11 +220,9 @@ p5 <- df %>%
     fill = "Addicted?"
   ) +
   theme_minimal()
-
-
-(p4 + p1) / p5
-
+p5
 ```
+**Interpretation:** By isolating the binary outcome (excluding "Not sure" responses and using numeric hour midpoints), this plot clearly illustrates the escalating probability of self-perceived addiction. At approximately 4 to 5 hours of daily use, the sample crosses a critical tipping point where more than 50% of users consider themselves addicted. Beyond 6 hours daily, self-reported addiction becomes the overwhelming majority, visually validating our predictive modeling hypothesis.
 
 ## Data quality
 - Intervals, not continuous values: all time variables (`social_hours`,
