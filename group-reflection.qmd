@@ -1,0 +1,452 @@
+---
+title: "Group Reflection"
+author: "Tiago HAGEN, Marco ANTON, Nizami AZIZOV and Louisa DJEBROUN"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+editor:
+  markdown:
+    wrap: 72
+---
+
+# Group Reflection
+
+## Skills inventory
+
+### Functions & refactoring (W2)
+
+**What we did:**
+
+We wrote a custom function called `hour_midpoint()` to convert interval-coded
+time responses such as `"2-4"` and `"4-6"` into approximate numeric midpoint
+values. We used the resulting variables for the permutation test and logistic
+regression.
+
+We also moved shared package loading and data preparation into `setup.R`, so
+that several Quarto pages could use the same cleaned dataset without repeating
+all code.
+
+**What worked well:**
+
+The helper function reduced repeated `case_when()` code and made the conversion
+process consistent. Using `setup.R` also improved consistency across the
+different `.qmd` files.
+
+**What was hard:**
+
+The raw data contained several different interval formats, so it was easy to
+miss categories. For example, values such as `"3-4"` had to be added after
+checking the raw responses. We also had to keep variable names consistent
+between `Dataset.qmd`, `InitialDataAnalysis.qmd`, and
+`ConfirmatoryDataAnalysis.qmd`.
+
+### Debugging (W3)
+
+**What we did:**
+
+We debugged R errors, Quarto rendering problems, incorrect factor levels,
+missing package calls, and Git synchronization issues. We used functions such
+as `glimpse()`, `summary()`, `count()`, `unique()`, and missing-value checks to
+inspect the data and identify problems.
+
+**What worked well:**
+
+Testing small sections separately helped us locate errors. Looking at the raw
+values before recoding was especially useful because some apparent missing
+values were actually unmatched category labels.
+
+**What was hard:**
+
+Git problems were harder than most R errors. We encountered merge conflicts,
+rebasing issues, a detached `HEAD`, and non-fast-forward push errors. These
+situations were difficult because the correct command depended on the current
+repository state.
+
+### Version control & remotes (W4)
+
+**What we did:**
+
+We used Git and GitHub to share files, record changes, and synchronize the
+project repository. Group members committed their work and pulled or pushed
+changes to the shared remote.
+
+**What worked well:**
+
+GitHub gave us a visible history of the project and allowed us to work on
+different parts of the analysis.
+
+**What was hard:**
+
+Our original workflow proposal described feature branches and pull requests,
+but in practice we often worked directly on `main`. This was simpler, but it
+also caused merge conflicts when more than one person edited the same file.
+We also learned that committing before pulling can create unnecessary
+divergence.
+
+### Quarto websites & collaborative coding (W5)
+
+**What we did:**
+
+We organised the project as a Quarto website with separate pages for the
+dataset, initial data analysis, confirmatory analysis, workflow organisation,
+and group reflection.
+
+**What worked well:**
+
+Quarto allowed us to combine prose, code, tables, statistical output, and
+visualisations in reproducible pages. Code folding and the table of contents
+made the pages easier to navigate.
+
+**What was hard:**
+
+At one point, the same material appeared in both the proposal and the split
+analysis files. This created duplication and the risk that files would become
+inconsistent. We also had to fix YAML formatting and make sure page titles and
+variable names matched across documents.
+
+### R packages (W6)
+
+**What we did:**
+
+We used:
+
+- `tidyverse` for data import, cleaning, transformation, and plotting;
+- `infer` for the permutation test;
+- `ggplot2` for static visualisation;
+- `patchwork` for combining plots;
+- `plotly` for an interactive family-time visualisation;
+- `broom` for tidying model output;
+- `gt` for the logistic regression table;
+- `knitr` for rendered tables;
+- `scales` for percentage labels;
+- `renv` for recording package versions.
+
+**What worked well:**
+
+The packages worked together well and supported a complete workflow from raw
+data to a rendered website.
+
+**What was hard:**
+
+We occasionally used packages in a page without loading them in the shared
+setup. We also had to remove duplicate library calls and ensure that every
+group member had compatible package versions.
+
+### Initial data analysis & data cleaning (W7)
+
+**What we did:**
+
+We renamed the long survey questions to shorter variable names, recoded one
+incorrect `profession = "male"` entry to `NA`, converted interval-coded time
+variables into numeric midpoints, and created a binary addiction variable.
+
+We explored the data with summaries, frequency tables, missing-value checks,
+and visualisations of age, screen time, family time, advertising influence,
+and self-reported addiction.
+
+**What worked well:**
+
+The data cleaning was documented clearly, and the exploratory plots helped us
+understand the sample before fitting models. We discovered that the sample was
+strongly concentrated among young respondents and students.
+
+**What was hard:**
+
+The dataset had no detailed codebook, so we had to infer the meaning of some
+response categories. The time variables were recorded as broad intervals
+rather than exact values. Converting these intervals to midpoints introduced
+approximation error.
+
+The `"not sure"` addiction group was also substantial. Excluding it from the
+binary regression reduced the effective sample size.
+
+### Reproducibility, open data & renv (W9)
+
+**What we did:**
+
+We used a publicly available dataset from Mendeley Data under a CC BY 4.0
+licence. We committed `renv.lock` and the required `renv` files to the
+repository.
+
+We also excluded the respondent name variable from all analysis because it was
+not needed and could potentially identify individuals.
+
+**What worked well:**
+
+The data source, licence, cleaning steps, and package environment were
+documented, making the project more transparent and reproducible.
+
+**What was hard:**
+
+The dataset itself was publicly available, but it did not include a full
+codebook or detailed sampling documentation. Therefore, reproducibility of our
+code was stronger than the representativeness of the underlying survey.
+
+### Analysis & inference strategies (W10)
+
+**What we did:**
+
+We initially considered five research questions, but after receiving feedback
+we narrowed the project to two:
+
+1. Is social media time associated with time spent with family?
+2. Can self-reported social media addiction be predicted from social media
+   hours, forgetting about time, age, and gender?
+
+For the first question, we used a permutation test for the slope between
+numeric midpoint versions of social media time and family time.
+
+For the second question, we fitted a multiple logistic regression model with
+`addicted_bin` as the binary outcome.
+
+**What worked well:**
+
+Reducing the number of questions allowed us to complete the analyses rather
+than leaving several questions at the planning stage. The selected methods
+matched the final variable structures more closely than our earlier ideas.
+
+**What was hard:**
+
+For the family-time question, both variables were originally ordinal interval
+categories. We had to decide whether treating midpoint values as numeric was
+defensible. We chose to proceed while clearly acknowledging the approximation.
+
+Interpreting the logistic regression also required care. We had to distinguish
+between odds and probabilities and avoid making causal claims from
+observational survey data.
+
+### Communication & visualisation (W11)
+
+**What we did:**
+
+We created proportion bar charts, histograms, grouped bar charts, a stacked
+interactive Plotly chart, and a formatted `gt` table for the logistic
+regression results.
+
+**What worked well:**
+
+The visualisations made the main patterns easier to communicate. The `gt`
+table was especially useful because it presented odds ratios, confidence
+intervals, and p-values in a readable format.
+
+**What was hard:**
+
+Some early interpretations were too strong. For example, we initially used
+phrases such as “tipping point” or implied that screen time directly reduced
+family time. We later changed the wording to describe associations and sample
+patterns more cautiously.
+
+We also discovered that manually setting incorrect factor levels could
+silently remove observations from plots.
+
+## Key analytical decisions
+
+### Decision 1: Continue with the original dataset
+
+**What were we deciding between?**
+
+We considered whether to switch to another dataset because our survey data had
+a student-heavy sample, interval-coded variables, inconsistent entries, and no
+complete codebook.
+
+**How did we reason through it?**
+
+By the time we considered changing datasets, we had already cleaned the data,
+written the helper function, produced exploratory plots, and developed the
+analysis plan. Starting again would have reduced the time available for
+completing the statistical analyses.
+
+We decided that the dataset was still suitable for demonstrating the course
+workflow, provided that we described its limitations honestly.
+
+**In hindsight, would we decide differently?**
+
+Probably not. The dataset was imperfect, but those imperfections gave us
+useful experience with data cleaning, missing values, recoding, and cautious
+interpretation. For a future project, we would examine the documentation and
+sampling design more carefully before committing to a dataset.
+
+### Decision 2: Reduce five research questions to two
+
+**What were we deciding between?**
+
+Our early proposal contained five research questions. We had to choose between
+covering all five superficially or completing a smaller number in more depth.
+
+**How did we reason through it?**
+
+The feedback recommended committing to the two focus questions. We kept the
+family-time association question and the addiction prediction question because
+they used different analytical approaches and were already connected to our
+cleaned variables.
+
+**In hindsight, would we decide differently?**
+
+No. The final project became more coherent after reducing the scope. We were
+able to include both visual exploration and inferential analysis for the
+selected questions.
+
+### Decision 3: Convert hour intervals to numeric midpoints
+
+**What were we deciding between?**
+
+We considered keeping the hour variables as ordered categories or converting
+them to approximate numeric values.
+
+**How did we reason through it?**
+
+The permutation slope test and logistic regression required numeric predictors.
+Using midpoints provided a practical approximation while preserving the order
+and approximate scale of the categories.
+
+**In hindsight, would we decide differently?**
+
+We would still use the midpoint conversion, but we would document it earlier
+and verify all raw response categories before producing any plots or models. We
+would also consider sensitivity analyses using the original ordered categories.
+
+## Workflow & collaboration
+
+**How did we divide work across group members?**
+
+Group members worked on different parts of the repository, including the
+dataset documentation, exploratory visualisations, confirmatory analysis,
+workflow description, and final website text. Shared tasks included data
+cleaning, reviewing code, and fixing rendering or Git problems.
+
+**What branching or Git workflow did we actually use, and did it match the
+proposal?**
+
+Our proposal described a feature-branch workflow with pull requests and
+automated checks. In practice, we mostly worked directly on the shared `main`
+branch and used regular commits, pulls, and pushes.
+
+Therefore, the actual workflow did not fully match the proposal. We also did
+not implement the planned pre-commit linting process consistently.
+
+**What worked well in our coordination?**
+
+Dividing the project into separate `.qmd` pages made it possible for different
+members to contribute independently. GitHub commit history also made it
+possible to track progress and recover earlier versions.
+
+**What was harder than expected?**
+
+Coordination became difficult when multiple people edited the same file or
+when local repositories were not synchronized before new commits. Merge
+conflicts and inconsistent copies of duplicated content cost time.
+
+**What would we change?**
+
+We would assign one owner to each file, pull before starting work, use feature
+branches for substantial edits, and avoid keeping the same content in multiple
+documents.
+
+## LLM usage
+
+### Usage 1: Data cleaning and helper functions
+
+- **Tool / model:** ChatGPT
+- **What it produced:** Suggested renaming code, missing-value checks, and the
+  structure of the `hour_midpoint()` function.
+- **What we had to correct or verify:** We checked the actual raw category
+  values and added missing mappings such as `"3-4"`. We also verified that
+  recoding `"not sure"` as `NA` was appropriate only for the binary model.
+
+### Usage 2: Selecting statistical methods
+
+- **Tool / model:** ChatGPT
+- **What it produced:** Suggestions including t-tests, correlations,
+  permutation tests, chi-square tests, and logistic regression.
+- **What we had to correct or verify:** A two-sample t-test was not suitable
+  because the explanatory variable was not binary. We replaced it with a
+  permutation test for linear association. We also checked that the logistic
+  regression formula matched the variables actually used in the project.
+
+### Usage 3: Interpretation of results
+
+- **Tool / model:** ChatGPT
+- **What it produced:** Draft explanations of plots, p-values, confidence
+  intervals, odds ratios, and model findings.
+- **What we had to correct or verify:** Some generated wording was too causal
+  or too confident. We replaced terms such as “tipping point,” “dependency,”
+  and “directly reduces” with more cautious descriptions of associations in
+  this sample.
+
+### Usage 4: Git troubleshooting
+
+- **Tool / model:** ChatGPT
+- **What it produced:** Suggested commands for resolving merge conflicts,
+  rebases, detached `HEAD` states, and rejected pushes.
+- **What we had to correct or verify:** Git advice had to be checked against
+  `git status` because a command that is correct in one repository state may be
+  harmful in another. In one case, we decided to abandon local changes and
+  reset the repository to `origin/main`.
+
+### Usage 5: Quarto structure and writing
+
+- **Tool / model:** ChatGPT
+- **What it produced:** Draft page structures, YAML suggestions, headings,
+  reflection text, and revisions to the analysis descriptions.
+- **What we had to correct or verify:** We changed generic text so that it
+  reflected our actual workflow. We also corrected mismatched variable names,
+  duplicated packages, broken YAML, and claims about tools such as feature
+  branches or pre-commit hooks that we had planned but not fully used.
+
+## One LLM error or mistake we caught
+
+One important mistake was a recommendation to use a two-sample t-test for a
+question where the explanatory variable contained more than two categories.
+The assumptions of that method did not match the data structure. After
+reviewing the variables, we instead used a permutation test based on the slope
+between family time and social media time.
+
+We also caught several smaller issues, including suggested variable names that
+did not match the cleaned dataset and interpretations that overstated what the
+plots could demonstrate.
+
+## What surprised us
+
+We expected higher social media use to show a clear negative relationship with
+family time. However, the permutation test did not provide evidence of a
+statistically significant linear association in this sample.
+
+We were also surprised by how strongly the dataset was dominated by students
+and young adults. This made us more cautious about generalising the findings to
+the wider population.
+
+## What our analysis cannot answer
+
+The project cannot establish that social media use causes addiction or reduces
+family time. The data are cross-sectional and self-reported, and respondents
+were not randomly assigned to different levels of social media use.
+
+The analysis also cannot represent the general population reliably because the
+sample is heavily concentrated among students. In addition, the use of broad
+hour intervals limits precision.
+
+## Skill development
+
+One concept that became clearer through the project was the difference between
+exploratory patterns and confirmatory evidence. A graph can suggest a trend,
+but a statistical test or model is needed to assess uncertainty, and even a
+statistically significant association does not establish causality.
+
+Git also became more understandable through practical use. Concepts such as
+remotes, branches, conflicts, rebasing, and detached `HEAD` states were much
+clearer after we encountered them in the shared repository.
+
+## What we would learn next
+
+A useful next step would be learning how to evaluate logistic regression more
+fully, including model diagnostics, predicted probabilities, calibration, and
+out-of-sample validation.
+
+We would also like to learn methods that handle ordinal interval-coded
+variables without converting them into approximate midpoints, as well as more
+structured collaborative Git workflows using feature branches and pull
+requests.
