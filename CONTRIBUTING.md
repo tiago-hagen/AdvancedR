@@ -2,32 +2,62 @@
 
 ## Group Members
 
-<!-- Fill in after the project is complete. -->
+### Louisa DJEBROUN — Logistic Regression and Repository Organisation
 
-**[Name]** — [files/sections responsible for]
-- [Key task 1]
-- [Key task 2]
-- [Collaborative tasks]
+**Primary responsibilities:**
+- Performed the logistic regression analysis to answer Research Question 2.
+- Presented the regression results using a formatted `gt` table.
+- Played a major role in data cleaning and organising the project repository.
 
-**[Name]** — [files/sections responsible for]
-- [Key task 1]
-- [Key task 2]
-- [Collaborative tasks]
+**Collaborative contributions:**
+- Contributed to dataset documentation, exploratory data analysis, visualisations, interpretation of results, and final editing.
 
-**[Name]** — [files/sections responsible for]
-- [Key task 1]
-- [Key task 2]
-- [Collaborative tasks]
+---
 
-## AI Tool Disclosure
+### Marco ANTON — Data Cleaning
 
-<!-- Complete per the department guidelines:
-     https://docs.google.com/document/d/1mQ5YAWKDt9Ax4LvK-wuUzO5XfCI0e-ZGdk49ghb08Ds -->
+**Primary responsibilities:**
+- Led the data cleaning process, including variable recoding and preparation of the analysis dataset.
+- Ensured the cleaned dataset was consistent for subsequent analyses.
+- Minucius investigation by Exploratory Data Analysis
 
-We used the following AI tools in this project:
+**Collaborative contributions:**
+- Contributed to dataset documentation, exploratory data analysis, visualisations, and interpretation of results.
+- Reviewed code and final project content.
+
+---
+
+### Nizami AZIZOV — Quarto Rendering and Repository Management
+
+**Primary responsibilities:**
+- Resolved Quarto rendering issues and website build errors.
+- Solved Git merge conflicts and helped maintain the project repository.
+- Proposed enhancements by the plotts
+
+**Collaborative contributions:**
+- Contributed to dataset exploration, exploratory analysis, visualisations, and reviewing the project.
+- Assisted with debugging and repository organisation.
+
+---
+### Tiago HAGEN — Confirmatory Analysis, Quarto Website Structure
+
+**Primary responsibilities:**
+- Performed the inferential analysis to answer Research Question 1 using the permutation test.
+- Structured and organised the Quarto website.
+- Worked on integrating the different project pages and resolving website structure issues.
+
+**Collaborative contributions:**
+- Contributed to dataset exploration, data cleaning, exploratory data analysis, and visualisations.
+- Reviewed code, interpretations
+
+
+# AI Tool Disclosure
+
+We used the following AI tools in this project.
 
 | Tool | Purpose | Scope |
 |------|---------|-------|
-|      |         |       |
+| ChatGPT (OpenAI) | Assistance with R programming, debugging, Quarto formatting, Git troubleshooting, statistical method selection, interpretation of results, and report writing |
+Gemini | Correction of merge conflict and webpage render
 
-All AI-generated code and text was reviewed and verified by a group member before inclusion.
+All AI-generated code, text, and suggestions were reviewed, tested, and verified by one or more group members before being included in the final project.
