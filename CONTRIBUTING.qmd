@@ -7,11 +7,6 @@ format:
     toc: false
     number-sections: false
     colorlinks: true
-    geometry:
-      - top=20mm
-      - left=20mm
-      - right=20mm
-      - bottom=20mm
 ---
 # Contributions
 
