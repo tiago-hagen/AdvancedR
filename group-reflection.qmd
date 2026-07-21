@@ -103,10 +103,9 @@ made the pages easier to navigate.
 
 **What was hard:**
 
-At one point, the same material appeared in both the proposal and the split
-analysis files. This created duplication and the risk that files would become
-inconsistent. We also had to fix YAML formatting and make sure page titles and
-variable names matched across documents.
+At one point, the same material appeared in both the proposal and the split analysis files. This created duplication and raised the risk that the files would become inconsistent over time. We also had to spend extra effort fixing YAML formatting and ensuring that page titles and variable names matched across all documents.
+
+Even after eliminating the duplicates, rendering the Quarto website proved to be extremely time-consuming. We encountered numerous unexpected YAML errors and file path issues, which led to significant troubleshooting and cost us a lot of time just trying to get the site to render successfully.
 
 ### R packages (W6)
 
