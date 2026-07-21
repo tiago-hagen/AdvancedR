@@ -397,6 +397,18 @@ documents.
   reflected our actual workflow. We also corrected mismatched variable names,
   duplicated packages, broken YAML, and claims about tools such as feature
   branches or pre-commit hooks that we had planned but not fully used.
+  
+### Usage 6: Quarto webpage refinement and Git conflict resolution
+
+- **Tool / model:** Gemini (Google)
+- **What it produced:** Precise corrections for webpage rendering failures,
+  remediation of broken Quarto/Markdown syntax, and line-by-line resolutions
+  for complex Git merge conflicts (particularly within `.gitignore` and
+  `InitialDataAnalysis.qmd`).
+- **What we had to correct or verify:** We manually verified each conflict
+  resolution in RStudio to ensure that no group member's analytical code or
+  updated package requirements were accidentally overwritten during the branch
+  integration process.
 
 ## One LLM error or mistake we caught
 

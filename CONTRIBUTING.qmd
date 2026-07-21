@@ -1,3 +1,18 @@
+---
+title: "Group Contribution Statement & AI Disclosure"
+author: "Tiago HAGEN, Marco ANTON, Nizami AZIZOV, Louisa DJEBROUN"
+date: today
+format:
+  pdf:
+    toc: false
+    number-sections: false
+    colorlinks: true
+    geometry:
+      - top=20mm
+      - left=20mm
+      - right=20mm
+      - bottom=20mm
+---
 # Contributions
 
 ## Group Members
