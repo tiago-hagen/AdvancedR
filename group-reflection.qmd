@@ -85,7 +85,9 @@ Our original workflow proposal described feature branches and pull requests,
 but in practice we often worked directly on `main`. This was simpler, but it
 also caused merge conflicts when more than one person edited the same file.
 We also learned that committing before pulling can create unnecessary
-divergence.
+divergence. 
+
+It was tried to limit direct pushes to main branch trough the repository configurations, but somehow someone (that was not the repo creater) could always push without pull requests.
 
 ### Quarto websites & collaborative coding (W5)
 
