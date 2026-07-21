@@ -42,7 +42,7 @@
 ### Tiago HAGEN — Confirmatory Analysis, Quarto Website Structure
 
 **Primary responsibilities:**
-- Performed the inferential analysis to answer Research Question 1 using the permutation test.
+- Performed the inferential analysis to answer Research Question 1 using the slope statistic.
 - Structured and organised the Quarto website.
 - Worked on integrating the different project pages and resolving website structure issues.
 
